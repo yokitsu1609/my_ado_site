@@ -9,157 +9,224 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* Общие настройки адаптивности */
+        /* --- Адаптивность для Biography (из твоего кода) --- */
         .hero-title {
-            font-size: clamp(2rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 10vw, 6rem);
             color: #00d4ff; 
             text-transform: uppercase; 
-            text-align: center;
+            letter-spacing: clamp(5px, 3vw, 20px); 
+            margin-bottom: 10px; 
             font-family: 'Arial Black', sans-serif; 
             text-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            text-align: center;
+        }
+        .facts-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
         }
 
-        /* Навигация с авто-подстройкой */
-        nav {
-            display: flex;
-            align-items: center;
-            padding: 20px clamp(15px, 5vw, 40px);
-            background: rgba(13, 17, 23, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 9999;
-            min-height: 70px;
-        }
-
-        /* Контейнер вкладок */
-        .nav-content {
-            display: flex;
-            flex: 1;
-            justify-content: flex-start; /* На ПК прижаты к левому краю, раз лого нет */
-            align-items: center;
-            gap: clamp(10px, 2vw, 25px); /* Расстояние между кнопками само уменьшается */
-            transition: all 0.3s ease;
-        }
-
-        .nav-content a {
-            text-decoration: none;
-            color: #c9d1d9;
-            font-weight: 500;
-            white-space: nowrap; /* Чтобы текст не разрывался на две строки */
-            font-size: clamp(13px, 1.2vw, 16px); /* Шрифт плавно уменьшается */
-            transition: 0.2s;
-        }
-
-        .nav-content a:hover { color: #00d4ff; }
-
+        /* --- НОВАЯ ЛОГИКА МЕНЮ --- */
         .menu-toggle {
-            display: none;
-            font-size: 26px;
+            display: none; /* Скрыто на ПК */
+            font-size: 24px;
             color: #00d4ff;
             cursor: pointer;
         }
 
-        /* МОБИЛЬНАЯ ЛОГИКА (Экран телефона) */
-        @media (max-width: 850px) {
-            .menu-toggle { display: block; }
-
-            .nav-content {
-                display: none; 
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: #0d1117;
-                padding: 20px 0;
-                border-bottom: 2px solid #00d4ff;
+        /* Мобильные стили (экран меньше 992px) */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block; /* Показываем три полоски */
             }
 
-            .nav-content.active { display: flex; }
+            .nav-content {
+                display: none; /* Прячем обычные ссылки */
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(13, 17, 23, 0.95);
+                backdrop-filter: blur(15px);
+                border-bottom: 2px solid #00d4ff;
+                padding: 20px;
+                z-index: 1000;
+                box-sizing: border-box;
+            }
+
+            .nav-content.active {
+                display: flex; /* Показываем при клике */
+            }
 
             .nav-content a {
-                width: 100%;
-                text-align: center;
                 padding: 15px;
-                font-size: 18px;
+                width: 100%;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                font-size: 1.1em;
+                text-align: center;
             }
 
             .auth-buttons {
-                flex-direction: column;
+                margin-top: 20px;
                 width: 100%;
-                padding: 10px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            main {
+                padding: 0 15px !important; /* Убираем гигантские отступы по бокам */
+            }
+            
+            nav {
+                padding: 15px 20px !important; /* Сжимаем шапку */
             }
         }
 
-        main { padding: 20px clamp(15px, 5vw, 40px); }
+        /* Анимация для саппорт-кнопки */
+        #supportBtn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="menu-toggle" id="mobile-menu">
-            <i class="fas fa-bars"></i>
-        </div>
-
-        <div class="nav-content" id="nav-content">
-            <a href="{{ url_for('home') }}" style="color: white; font-weight: bold;">ГЛАВНАЯ</a>
-            <a href="{{ url_for('index') }}"><i class="fas fa-newspaper"></i> Новости</a>
-            <a href="/discography"><i class="fas fa-compact-disc"></i> Дискография</a>
-            <a href="/concerts"><i class="fas fa-microphone"></i> Концерты</a>
-            <a href="/about"><i class="fas fa-info-circle"></i> О Ado</a>
+    <div class="container">
+        <nav style="display: flex; justify-content: space-between; align-items: center; padding: 25px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1001;">
             
-            {% if current_user.is_authenticated %}
-                <a href="/favorites" style="color: #ff4b4b;"><i class="fas fa-heart"></i> Любимое</a>
-            {% endif %}
+            <div class="logo">
+                <a href="{{ url_for('home') }}" style="text-decoration: none; color: white; font-weight: bold; font-size: 1.3em; letter-spacing: 2px;">
+                    ADO <span style="color: #00d4ff;">FAN</span>
+                </a>
+            </div>
 
-            <div class="auth-buttons" style="display: flex; align-items: center; gap: 15px; margin-left: auto;">
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <div class="nav-content" id="nav-content" style="display: flex; align-items: center; gap: 25px;">
+                <a href="{{ url_for('home') }}" style="text-decoration: none; color: white; font-weight: bold;">ГЛАВНАЯ</a>
+                <a href="{{ url_for('index') }}" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-newspaper"></i> Новости</a>
+                <a href="/discography" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-compact-disc"></i> Дискография</a>
+                <a href="/concerts" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-microphone"></i> Концерты</a>
+                <a href="/about" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-info-circle"></i> О Ado</a>
+                
                 {% if current_user.is_authenticated %}
-                    <div style="position: relative;">
-                        <div id="userTrigger" style="cursor: pointer; color: white; background: rgba(0, 212, 255, 0.1); padding: 8px 15px; border-radius: 20px; border: 1px solid #00d4ff; font-size: 14px;">
-                            <i class="fas fa-user-ninja"></i> {{ current_user.username }}
-                        </div>
-                        <div id="logoutMenu" style="display: none; position: absolute; top: 45px; right: 0; background: #1c2128; border: 1px solid #444c56; border-radius: 10px; padding: 10px; min-width: 120px;">
-                            <a href="/logout" style="color: #ff4b4b; text-decoration: none; font-size: 14px;">Выйти</a>
-                        </div>
-                    </div>
-                {% else %}
-                    <a href="/login" style="color: #00d4ff; text-decoration: none; font-size: 14px;">Вход</a>
-                    <a href="/register" style="background: #00d4ff; color: black !important; padding: 8px 15px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 14px;">Регистрация</a>
+                    <a href="/favorites" style="color: #ff4b4b; text-decoration: none; font-weight: bold;">
+                        <i class="fas fa-heart"></i> Любимое
+                    </a>
                 {% endif %}
+
+                <div class="auth-buttons">
+                    {% if current_user.is_authenticated %}
+                        <div style="position: relative;">
+                            <div id="userTrigger" style="cursor: pointer; color: white; font-weight: bold; display: flex; align-items: center; gap: 10px; background: rgba(0, 212, 255, 0.1); padding: 8px 18px; border-radius: 25px; border: 1px solid #00d4ff;">
+                                <i class="fas fa-user-ninja" style="color: #00d4ff;"></i>
+                                {{ current_user.username }}
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                            <div id="logoutMenu" style="display: none; position: absolute; top: 45px; right: 0; background: #1c2128; border: 1px solid #444c56; border-radius: 10px; padding: 10px; z-index: 1000; min-width: 140px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                                <a href="/logout" style="color: #ff4b4b; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 10px; padding: 8px;">
+                                    <i class="fas fa-sign-out-alt"></i> Выйти
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <a href="/login" style="color: #00d4ff; text-decoration: none;">Вход</a>
+                            <a href="/register" style="color: white; text-decoration: none; background: #00d4ff; padding: 8px 18px; border-radius: 20px; font-weight: bold; color: black !important;">Регистрация</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <main style="padding: 0 40px;">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <div id="supportBtn" title="Поддержка проекта" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #00d4ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); z-index: 9999; transition: 0.3s;">
+        <i class="fas fa-headset" style="color: #0d1117; font-size: 24px;"></i>
+    </div>
+
+    <div id="supportModal" style="display: none; position: fixed; bottom: 100px; right: 30px; width: 300px; background: #161b22; border: 1px solid #00d4ff; border-radius: 20px; padding: 20px; z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.8); animation: slideUp 0.3s ease;">
+        <div id="mainSupportView">
+            <h3 style="color: #00d4ff; margin-top: 0;">Ado Support</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="https://t.me/fruitsretro" target="_blank" style="text-decoration: none; background: rgba(0, 212, 255, 0.1); color: white; padding: 10px; border-radius: 10px; font-size: 0.9em; border: 1px solid #00d4ff;">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <button onclick="toggleReportForm()" style="background: rgba(255, 75, 75, 0.1); color: white; padding: 10px; border-radius: 10px; border: 1px solid #ff4b4b; cursor: pointer;">
+                    <i class="fas fa-bug"></i> Ошибка
+                </button>
             </div>
         </div>
-    </nav>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <div id="reportFormView" style="display: none;">
+            <h3 style="color: #ff4b4b; margin-top: 0;">Что сломалось?</h3>
+            <textarea id="errorText" style="width: 100%; height: 70px; background: #0d1117; color: white; border: 1px solid #30363d; border-radius: 10px; padding: 10px; margin-bottom: 10px; resize: none;"></textarea>
+            <button onclick="sendFakeReport()" style="width: 100%; background: #00d4ff; color: black; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">Отправить</button>
+        </div>
+    </div>
 
     <script>
+        // Скрипт для "Трех полосок"
         const mobileBtn = document.getElementById('mobile-menu');
         const navContent = document.getElementById('nav-content');
-        const userTrigger = document.getElementById('userTrigger');
-        const logoutMenu = document.getElementById('logoutMenu');
 
-        mobileBtn.onclick = function(e) {
+        mobileBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             navContent.classList.toggle('active');
-            mobileBtn.querySelector('i').classList.toggle('fa-bars');
-            mobileBtn.querySelector('i').classList.toggle('fa-times');
-        };
+            const icon = mobileBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
 
-        if (userTrigger) {
-            userTrigger.onclick = function(e) {
+        // Закрытие меню при клике на страницу
+        document.addEventListener('click', () => {
+            navContent.classList.remove('active');
+            const icon = mobileBtn.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+
+        // Старая логика профиля и саппорта
+        document.addEventListener("DOMContentLoaded", function() {
+            const userTrigger = document.getElementById('userTrigger');
+            const logoutMenu = document.getElementById('logoutMenu');
+            if (userTrigger) {
+                userTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    logoutMenu.style.display = logoutMenu.style.display === 'block' ? 'none' : 'block';
+                });
+            }
+
+            const supportBtn = document.getElementById('supportBtn');
+            const supportModal = document.getElementById('supportModal');
+            supportBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                logoutMenu.style.display = logoutMenu.style.display === 'block' ? 'none' : 'block';
-            };
+                supportModal.style.display = supportModal.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        function toggleReportForm() {
+            const main = document.getElementById('mainSupportView');
+            const form = document.getElementById('reportFormView');
+            main.style.display = main.style.display === 'none' ? 'block' : 'none';
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
 
-        document.onclick = function() {
-            navContent.classList.remove('active');
-            if (logoutMenu) logoutMenu.style.display = 'none';
-        };
+        function sendFakeReport() {
+            alert("Сообщение отправлено админу @fruitsretro!");
+            document.getElementById('supportModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
