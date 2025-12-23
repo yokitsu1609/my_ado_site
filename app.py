@@ -12,12 +12,20 @@ app.secret_key = os.getenv('SECRET_KEY', 'ado_fan_project_secure_key_123')
 
 #база данных
 def get_db_connection():
-    return psycopg2.connect(
-        host=os.getenv('DB_HOST', 'localhost'),
-        database=os.getenv('DB_NAME', 'ado_db'),
-        user=os.getenv('DB_USER', 'postgres'),
-        password=os.getenv('DB_PASSWORD', 'postgres')
-    )
+    # Пытаемся взять одну общую ссылку DATABASE_URL (которую мы вписали в Render)
+    db_url = os.getenv('DATABASE_URL')
+    
+    if db_url:
+        # Если ссылка есть (значит мы в интернете), подключаемся по ней
+        return psycopg2.connect(db_url, sslmode='require')
+    else:
+        # Если ссылки нет (значит мы запустили код на компе), используем старый метод
+        return psycopg2.connect(
+            host=os.getenv('DB_HOST', 'localhost'),
+            database=os.getenv('DB_NAME', 'ado_db'),
+            user=os.getenv('DB_USER', 'postgres'),
+            password=os.getenv('DB_PASSWORD', 'postgres')
+        )
 
 #Flask-Login
 login_manager = LoginManager()
@@ -367,4 +375,5 @@ def delete_track(track_id):
 
 
 if __name__ == '__main__':
+
     app.run(debug=True)
