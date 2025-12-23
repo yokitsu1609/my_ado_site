@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <h1 style="color: #00d4ff; text-align: center; font-size: 2.5em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 30px;">
+        Все релизы Ado
+    </h1>
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="card" style="border: 2px dashed #00d4ff; background: rgba(0, 212, 255, 0.05); margin-bottom: 40px; padding: 20px; border-radius: 15px;">
+        <h3 style="color: #00d4ff; margin-top: 0;">➕ Добавить новый альбом</h3>
+        <form action="/add_album" method="POST" style="display: grid; gap: 15px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <input type="text" name="title" placeholder="Название" required style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+                <input type="number" name="year" placeholder="Год" required style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+            </div>
+            <input type="text" name="url" placeholder="Ссылка на обложку (URL)" required style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+            <textarea name="desc" placeholder="Описание" style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white; min-height: 80px;"></textarea>
+            <button type="submit" style="background: #00d4ff; color: #0d1117; font-weight: bold; border: none; padding: 12px; border-radius: 5px; cursor: pointer;">Добавить альбом</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="discography-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px;">
+        {% for album in albums %}
+        <div class="album-card" style="background: #161b22; border-radius: 15px; border: 1px solid #30363d; overflow: hidden; transition: 0.3s; position: relative;">
+            
+            {% if current_user.is_authenticated and current_user.is_admin %}
+            <form action="{{ url_for('delete_album', album_id=album[0]) }}" method="POST" 
+                  style="position: absolute; top: 10px; left: 10px; z-index: 20;"
+                  onsubmit="return confirm('Удалить альбом «{{ album[1] }}» и все его треки?');">
+                <button type="submit" class="admin-delete-btn" title="Удалить альбом">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
+            {% endif %}
+
+            {% if current_user.is_authenticated %}
+            <div style="position: absolute; top: 10px; right: 10px; z-index: 20; background: rgba(0,0,0,0.6); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);">
+                <form action="/add_to_favorite" method="POST" style="margin: 0;">
+                    <input type="hidden" name="content_id" value="{{ album[0] }}">
+                    <input type="hidden" name="content_type" value="album">
+                    <input type="hidden" name="title" value="{{ album[1] }}">
+                    <input type="hidden" name="extra_data" value="{{ album[4] }}">
+                    <button type="submit" title="Добавить в любимое" style="background: none; border: none; cursor: pointer; font-size: 1.1rem;">❤️</button>
+                </form>
+            </div>
+            {% endif %}
+
+            <a href="/album/{{ album[0] }}" style="text-decoration: none; color: white;">
+                <img src="{{ album[4] }}" style="width: 100%; height: 250px; object-fit: cover;">
+                <div style="padding: 15px;">
+                    <h3 style="margin: 0; font-size: 1.2em; color: #fff;">{{ album[1] }}</h3>
+                    <p style="color: #00d4ff; margin: 5px 0;">{{ album[2] }} год</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .album-card:hover {
+        transform: translateY(-10px);
+        border-color: #00d4ff;
+        box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+    }
+
+
+    .admin-delete-btn {
+        background: rgba(255, 0, 0, 0.7);
+        border: none;
+        color: white;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+
+    .admin-delete-btn:hover {
+        background: rgb(255, 0, 0);
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+</style>
+{% endblock %}

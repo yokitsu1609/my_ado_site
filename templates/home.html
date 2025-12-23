@@ -1,0 +1,272 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="home-page-container">
+    <section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.alphacoders.com/132/1321743.png');">
+        <div class="hero-content">
+            <div class="glitch-title" data-text="ADO">ADO</div>
+            <p class="subtitle">狂言 (KYOGEN) • THE VOICE OF A GENERATION</p>
+            
+            <div class="social-links-top large-icons">
+                <a href="https://twitter.com/ado1024" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.youtube.com/c/Ado1024" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/ado1024ios/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@ado1024official_tktk" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://open.spotify.com/artist/6mSTql9v9Yhpv58679pS9p" target="_blank" title="Spotify"><i class="fab fa-spotify"></i></a>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="/news" class="cta-button primary">ПОСЛЕДНИЕ НОВОСТИ</a>
+                <a href="/discography" class="cta-button secondary">ДИСКОГРАФИЯ</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="quote-section" style="text-align: center; padding: 60px 20px; background: rgba(0, 0, 0, 0.3); border-radius: 30px; margin: 40px 0; border: 1px solid rgba(0, 212, 255, 0.1);">
+    <i class="fas fa-quote-left" style="color: var(--neon-blue); font-size: 2em; margin-bottom: 20px;"></i>
+    
+    <h2 style="font-style: italic; color: #fff; font-weight: 300; line-height: 1.6; max-width: 800px; margin: 0 auto; font-size: 1.8em;">
+        «Я хочу, чтобы люди оценивали меня по моему <span style="color: var(--neon-blue); font-weight: bold;">голосу</span>, а не по внешности. Моё лицо не имеет значения для музыки, которую я создаю».
+    </h2>
+    
+    <p style="color: #8b949e; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9em;">
+        — Ado (из интервью для Billboard)
+    </p>
+</div>
+
+    <section class="info-grid">
+        <div class="info-card reveal">
+            <div class="card-image" style="background-image: url('https://j-entertainment.jp/wp-content/uploads/ado001.jpg');"></div>
+            <div class="card-text">
+                <div class="tag">ЛИЧНОСТЬ</div>
+                <h3>Феномен Утаите</h3>
+                <p>Начав свою карьеру в 14 лет как "утаите", Ado записывала свои первые хиты в обычном домашнем шкафу, используя его как звукозаписывающую кабину. Сегодня её голос знает весь мир.</p>
+            </div>
+        </div>
+
+        <div class="info-card reverse reveal">
+            <div class="card-image" style="background-image: url('https://i.pinimg.com/originals/2f/74/dd/2f74dd2348266b6ca786093cd6856316.jpg');"></div>
+            <div class="card-text">
+                <div class="tag">ДОСТИЖЕНИЯ</div>
+                <h3>Мировой Тур "Wish"</h3>
+                <p>В 2024 году Ado вошла в историю, проведя свой первый мировой тур. Все билеты на площадки в Европе, Америке и Азии были раскуплены за считанные минуты.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="parallax-banner" style="background-image: url('https://i.ytimg.com/vi/g-nHg_CcVYc/maxresdefault.jpg');">
+        <div class="parallax-content">
+            <h2 style="font-size: 3em;">ONE PIECE FILM: RED</h2>
+            <p>Голос Уты, который покорил мировые кинотеатры</p>
+        </div>
+    </section>
+
+    <section class="social-footer">
+        <h2 class="section-title">ОФИЦИАЛЬНЫЕ КАНАЛЫ</h2>
+        <div class="social-grid">
+            <a href="https://www.youtube.com/c/Ado1024" class="social-item yt" target="_blank">
+                <i class="fab fa-youtube"></i>
+                <div class="social-info">
+                    <strong>YouTube</strong>
+                    <span>10M+ Подписчиков</span>
+                </div>
+            </a>
+            <a href="https://twitter.com/ado1024" class="social-item tw" target="_blank">
+                <i class="fab fa-x-twitter"></i>
+                <div class="social-info">
+                    <strong>X (Twitter)</strong>
+                    <span>2.3M+ Читателей</span>
+                </div>
+            </a>
+            <a href="https://open.spotify.com/artist/6mSTql9v9Yhpv58679pS9p" class="social-item sp" target="_blank">
+                <i class="fab fa-spotify"></i>
+                <div class="social-info">
+                    <strong>Spotify</strong>
+                    <span>Слушать треки</span>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+    
+    .home-page-container { margin-top: -30px; overflow-x: hidden; }
+    
+    .hero-section {
+        height: 100vh;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-bottom: 3px solid var(--neon-blue);
+    }
+
+    .glitch-title {
+        font-size: 10vw;
+        font-weight: 900;
+        letter-spacing: 30px;
+        color: white;
+        text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        letter-spacing: 8px;
+        color: var(--neon-blue);
+        margin-bottom: 40px;
+        font-weight: bold;
+    }
+
+    .social-links-top.large-icons {
+        font-size: 3.8rem;
+        margin-bottom: 60px;
+        display: flex;
+        justify-content: center;
+        gap: 45px;
+    }
+
+    .social-links-top.large-icons a {
+        color: white;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .social-links-top.large-icons a:hover {
+        color: var(--neon-blue);
+        transform: scale(1.3) translateY(-12px);
+        filter: drop-shadow(0 0 25px var(--neon-blue));
+    }
+
+    
+    .hero-buttons { display: flex; gap: 20px; justify-content: center; }
+    .cta-button {
+        padding: 18px 40px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    .cta-button.primary { background: var(--neon-blue); color: #000 !important; box-shadow: 0 0 20px var(--neon-blue); }
+    .cta-button.secondary { border: 2px solid white; color: white !important; }
+    .cta-button:hover { transform: translateY(-3px); opacity: 0.9; }
+
+  
+    .quote-banner { background: #000; padding: 70px 20px; text-align: center; }
+    .quote-banner h2 { font-style: italic; color: #fff; font-size: 1.8rem; margin-bottom: 15px; }
+    .quote-banner span { color: var(--neon-blue); font-weight: bold; letter-spacing: 2px; }
+
+    .parallax-banner {
+        height: 450px;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .parallax-banner::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); }
+    .parallax-content { position: relative; z-index: 1; color: white; text-align: center; }
+
+  
+    .info-grid { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+    .info-card { 
+        display: flex; gap: 50px; align-items: center; margin-bottom: 100px; 
+        background: rgba(255,255,255,0.02); border-radius: 20px; overflow: hidden;
+    }
+    .info-card.reverse { flex-direction: row-reverse; }
+    .card-image { flex: 1; height: 500px; background-size: cover; background-position: center; }
+    .card-text { flex: 1; padding: 50px; }
+    .tag { color: var(--neon-pink); font-weight: bold; letter-spacing: 3px; margin-bottom: 15px; }
+
+
+    .social-footer { padding: 80px 5%; background: #000; }
+    .section-title { text-align: center; letter-spacing: 10px; margin-bottom: 50px; color: var(--neon-blue); }
+    .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .social-item {
+        display: flex; align-items: center; gap: 20px; padding: 30px;
+        background: #111; border: 1px solid #222; border-radius: 15px; text-decoration: none; color: white;
+        transition: 0.3s;
+    }
+    .social-item:hover { border-color: var(--neon-blue); transform: translateY(-5px); }
+
+ 
+    .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s all ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+        .social-links-top.large-icons { font-size: 2.5rem; gap: 20px; }
+        .info-card { flex-direction: column !important; }
+        .card-image { width: 100%; height: 300px; }
+    }
+</style>
+
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            if (elementTop < windowHeight - 150) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
+</script>
+
+
+<section class="home-reviews" style="margin-top: 80px; padding: 40px 0;">
+    <h2 style="color: var(--neon-blue); text-align: center; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px;">Голоса Фанатов</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        {% for review in reviews %}
+        <div class="review-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,212,255,0.1); padding: 25px; border-radius: 20px; position: relative; transition: 0.3s;">
+            <i class="fas fa-quote-left" style="position: absolute; top: 20px; left: 20px; color: rgba(0,212,255,0.1); font-size: 2em;"></i>
+            
+            <div style="position: relative; z-index: 1;">
+                <p style="font-style: italic; color: #c9d1d9; margin-bottom: 20px; min-height: 60px;">"{{ review[1] }}"</p>
+                
+                <div style="display: flex; align-items: center; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                    <div style="width: 40px; height: 40px; background: var(--neon-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black;">
+                        <i class="fas fa-user-ninja"></i>
+                    </div>
+                    <div>
+                        <strong style="display: block; color: #fff; font-size: 0.9em;">{{ review[0] }}</strong>
+                        <small style="color: #8b949e; font-size: 0.8em;">{{ review[2].strftime('%d.%m.%Y') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <div style="margin-top: 50px; text-align: center; background: rgba(0,212,255,0.05); padding: 30px; border-radius: 20px; border: 1px dashed var(--neon-blue);">
+        <h3 style="color: #fff; margin-bottom: 20px;">Оставь свой след в истории Ado</h3>
+        <form action="/add_review" method="POST" style="max-width: 600px; margin: 0 auto;">
+            <textarea name="text" placeholder="Напиши что-нибудь крутое..." required 
+                      style="width: 100%; height: 100px; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; color: white; padding: 15px; margin-bottom: 15px;"></textarea>
+            <button type="submit" style="background: var(--neon-blue); color: black; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer;">ОТПРАВИТЬ ОТЗЫВ</button>
+        </form>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+    .review-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--neon-blue) !important;
+        box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+    }
+</style>
+
+
+
+{% endblock %}
