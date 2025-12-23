@@ -1,61 +1,43 @@
-/* --- ПОЛНОСТЬЮ ОБНОВЛЕННАЯ АДАПТИВНАЯ НАВИГАЦИЯ --- */
 nav {
     display: flex;
-    flex-direction: column; /* На мобилках всё в столбик */
+    justify-content: space-between;
     align-items: center;
     background: var(--card-bg);
     backdrop-filter: blur(15px);
-    padding: 15px;
-    border-radius: 0 0 20px 20px; /* Скругляем только низ */
-    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 15px;
     border: 2px solid var(--neon-blue);
     position: sticky;
-    top: 0;
+    top: 10px;
     z-index: 1000;
+    width: 100%;
+    overflow: hidden; /* Чтобы ничего не вылетало за границы */
 }
 
 .nav-links {
-    display: grid; 
-    grid-template-columns: 1fr 1fr; /* Вкладки в две колонки, чтобы были крупными */
-    gap: 10px;
-    width: 100%;
-    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* Позволяет листать меню пальцем */
+    white-space: nowrap; /* Запрещает кнопкам прыгать на вторую строку */
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iPhone */
+}
+
+/* Скрываем некрасивую полосу прокрутки в меню */
+.nav-links::-webkit-scrollbar {
+    display: none;
 }
 
 nav a {
-    background: rgba(0, 212, 255, 0.1);
-    border: 1px solid var(--neon-blue);
-    padding: 15px 5px; /* Высокие кнопки, удобно нажимать */
-    border-radius: 10px;
-    text-align: center;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
     color: var(--neon-blue) !important;
-}
-
-/* На компьютерах возвращаем всё в одну линию */
-@media (min-width: 769px) {
-    nav {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 20px 30px;
-        border-radius: 15px;
-        margin: 20px auto;
-        max-width: 1200px;
-    }
-    .nav-links {
-        display: flex;
-        width: auto;
-        grid-template-columns: none;
-    }
-    nav a {
-        background: transparent;
-        border: none;
-        padding: 10px 15px;
-    }
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px; /* Одинаковый размер и на ПК, и на тел */
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0; /* Чтобы кнопки не сжимались в кашу */
 }
 
 /* --- ИСПРАВЛЕНИЕ "ВСЁ МАЛЕНЬКОЕ" --- */
