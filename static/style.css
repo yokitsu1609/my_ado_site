@@ -1,0 +1,215 @@
+/* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --neon-blue: #00d4ff;
+    --neon-pink: #ff4b4b;
+    --neon-glow: rgba(0, 212, 255, 0.6);
+    --dark-bg: #0d1117;
+    --card-bg: rgba(13, 17, 23, 0.85); /* Эффект стекла */
+    --border-color: rgba(48, 54, 61, 1);
+}
+
+body {
+    background-color: var(--dark-bg);
+    /* Фоновое изображение Адо с градиентом */
+    background-image: 
+        linear-gradient(rgba(13, 17, 23, 0.75), rgba(13, 17, 23, 0.9)),
+        url('https://images.alphacoders.com/132/1321743.png'); 
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: #c9d1d9;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px; /* Немного увеличили для простора */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- АНИМАЦИИ --- */
+main {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Пульсация сердца */
+.fa-heart {
+    animation: heartBeat 1.5s infinite;
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+}
+
+/* --- ОБНОВЛЕННАЯ НАВИГАЦИЯ --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Чтобы вкладки не вылезали */
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(15px);
+    padding: 20px 30px;
+    min-height: 85px; /* Увеличенная высота */
+    border-radius: 15px;
+    margin-bottom: 40px;
+    border: 2px solid var(--neon-blue) !important; /* Утолщенная рамка */
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 10px rgba(0, 212, 255, 0.1);
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Пробел между ссылками */
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--neon-blue) !important;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    color: #fff !important;
+    text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    transform: translateY(-2px);
+}
+
+/* --- КАРТОЧКИ --- */
+.card, .album-card, .track-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    position: relative;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(5px);
+}
+
+.card:hover, .album-card:hover {
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);
+    transform: translateY(-8px);
+}
+
+/* --- ТЕКСТ И ГЛИТЧ --- */
+h1, h2, h3 {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Глитч-эффект для заголовков с атрибутом data-text */
+h1[data-text] {
+    position: relative;
+}
+h1[data-text]::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    text-shadow: -2px 0 var(--neon-pink);
+    top: 0;
+    color: #fff;
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: noise-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-anim {
+    0% { clip: rect(20px, 9999px, 40px, 0); }
+    100% { clip: rect(60px, 9999px, 80px, 0); }
+}
+
+/* --- КНОПКИ И ФОРМЫ --- */
+button, .btn-submit {
+    background: transparent;
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--neon-blue);
+    color: var(--dark-bg);
+    box-shadow: 0 0 25px var(--neon-blue);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: rgba(13, 17, 23, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* --- ДИСКОГРАФИЯ --- */
+.discography-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.album-card img {
+    width: 100%;
+    border-radius: 10px;
+    transition: 0.5s;
+    margin-bottom: 15px;
+}
+
+/* --- СКРОЛЛБАР --- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--dark-bg), var(--neon-blue), var(--dark-bg));
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--neon-blue);
+}
