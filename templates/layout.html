@@ -2,157 +2,123 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ado Fan Project</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* Обнуляем навигацию, чтобы старый CSS не мешал */
-        nav {
-            all: unset; 
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            height: 70px !important;
-            background: #0d1117 !important;
-            border-bottom: 2px solid #00d4ff !important;
-            padding: 0 20px !important;
-            position: sticky !important;
-            top: 0 !important;
-            z-index: 99999 !important;
-            box-sizing: border-box !important;
+        /* --- ЭТОТ БЛОК ВИДЕН ТОЛЬКО НА МОБИЛКАХ (МЕНЬШЕ 992px) --- */
+        @media (max-width: 992px) {
+            .desktop-nav { display: none !important; } /* Прячем ПК-шапку */
+            
+            .mobile-header {
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background: rgba(13, 17, 23, 0.9);
+                border-bottom: 1px solid #00d4ff;
+            }
+
+            .mobile-menu-overlay {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: #0d1117;
+                z-index: 10000;
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .mobile-menu-overlay.active { display: flex; }
+            
+            .mobile-menu-overlay a {
+                color: white;
+                font-size: 1.5rem;
+                padding: 15px;
+                text-decoration: none;
+                border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+                text-align: center;
+            }
+        }
+
+        /* --- ЭТОТ БЛОК ВИДЕН ТОЛЬКО НА ПК (БОЛЬШЕ 992px) --- */
+        @media (min-width: 993px) {
+            .mobile-header { display: none !important; }
         }
 
         .logo-center {
-            position: absolute !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            font-size: 24px !important;
-            font-weight: bold !important;
-            letter-spacing: 5px !important;
-            color: white !important;
-            text-decoration: none !important;
-        }
-
-        /* Кнопка три полоски - СДЕЛАЕМ ЕЁ ГИГАНТСКОЙ ДЛЯ ТЕСТА */
-        .mobile-btn {
-            display: block !important;
-            color: #00d4ff !important;
-            font-size: 30px !important;
-            cursor: pointer !important;
-            z-index: 100001 !important;
-        }
-
-        /* Скрываем вкладки на ПК по умолчанию в этом блоке, если экран маленький */
-        .nav-links-mobile {
-            display: none; 
-            position: fixed !important;
-            top: 70px !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100vh !important;
-            background: rgba(13, 17, 23, 0.98) !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            padding-top: 50px !important;
-            z-index: 99998 !important;
-        }
-
-        /* Когда меню открыто */
-        .nav-links-mobile.show {
-            display: flex !important;
-        }
-
-        .nav-links-mobile a {
-            color: white !important;
-            font-size: 22px !important;
-            text-decoration: none !important;
-            margin: 20px 0 !important;
-            text-transform: uppercase !important;
-            border-bottom: 1px solid #00d4ff !important;
-            width: 80% !important;
-            text-align: center !important;
-            padding-bottom: 10px !important;
-        }
-
-        /* На больших экранах прячем кнопку и показываем меню в ряд */
-        @media (min-width: 993px) {
-            .mobile-btn { display: none !important; }
-            .nav-links-mobile {
-                position: static !important;
-                display: flex !important;
-                flex-direction: row !important;
-                height: auto !important;
-                width: auto !important;
-                padding: 0 !important;
-                background: transparent !important;
-            }
-            .nav-links-mobile a {
-                font-size: 14px !important;
-                margin: 0 15px !important;
-                width: auto !important;
-                border: none !important;
-            }
-            .logo-center {
-                position: static !important;
-                transform: none !important;
-                margin-right: auto !important;
-            }
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 3px;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="mobile-btn" id="open-menu">
-            <i class="fas fa-bars"></i>
+    <nav class="desktop-nav" style="display: flex; justify-content: space-between; align-items: center; padding: 25px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; background: rgba(13, 17, 23, 0.5); backdrop-filter: blur(10px);">
+        <div style="display: flex; align-items: center; gap: 25px;">
+            <a href="{{ url_for('home') }}" style="text-decoration: none; color: white; font-weight: bold; font-size: 1.1em; letter-spacing: 1px;">ADO</a>
+            <a href="{{ url_for('index') }}" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-newspaper"></i> Новости</a>
+            <a href="/discography" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-compact-disc"></i> Дискография</a>
+            <a href="/about" style="text-decoration: none; color: #c9d1d9;"><i class="fas fa-info-circle"></i> О Ado</a>
         </div>
 
-        <a href="/" class="logo-center">ADO</a>
-
-        <div class="nav-links-mobile" id="menu-box">
-            <a href="/">Главная</a>
-            <a href="/index">Новости</a>
-            <a href="/discography">Дискография</a>
-            <a href="/about">О Ado</a>
+        <div class="auth-buttons">
             {% if current_user.is_authenticated %}
-                <a href="/logout" style="color: #ff4b4b !important;">Выйти</a>
+                <a href="/logout" style="color: #ff4b4b; text-decoration: none; font-weight: bold;">Выйти ({{ current_user.username }})</a>
             {% else %}
-                <a href="/login">Вход</a>
-                <a href="/register">Регистрация</a>
+                <a href="/login" style="color: #00d4ff; text-decoration: none; margin-right: 20px;">Вход</a>
+                <a href="/register" style="background: #00d4ff; padding: 8px 18px; border-radius: 20px; color: black !important; text-decoration: none; font-weight: bold;">Регистрация</a>
             {% endif %}
         </div>
-
-        <div style="width: 30px;" class="mobile-btn"></div>
     </nav>
 
-    <main style="padding: 20px;">
+    <header class="mobile-header">
+        <div id="burger-click" style="cursor: pointer; font-size: 24px; color: #00d4ff;">
+            <i class="fas fa-bars"></i>
+        </div>
+        <a href="/" class="logo-center">ADO</a>
+        <div style="width: 24px;"></div> </header>
+
+    <div class="mobile-menu-overlay" id="mobile-overlay">
+        <a href="/">Главная</a>
+        <a href="/index">Новости</a>
+        <a href="/discography">Дискография</a>
+        <a href="/about">О Ado</a>
+        {% if not current_user.is_authenticated %}
+            <a href="/login">Вход</a>
+            <a href="/register" style="color: #00d4ff;">Регистрация</a>
+        {% else %}
+            <a href="/logout" style="color: #ff4b4b;">Выйти</a>
+        {% endif %}
+    </div>
+
+    <main style="padding: 0 40px;">
         {% block content %}{% endblock %}
     </main>
 
     <script>
-        // Самый простой скрипт без лишних наворотов
-        const btn = document.getElementById('open-menu');
-        const box = document.getElementById('menu-box');
+        const burger = document.getElementById('burger-click');
+        const overlay = document.getElementById('mobile-overlay');
 
-        btn.onclick = function() {
-            console.log("Кнопка нажата!"); // Проверка в консоли
-            box.classList.toggle('show');
-            
-            // Меняем иконку
-            const icon = btn.querySelector('i');
-            if (box.classList.contains('show')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-bars';
-            }
+        burger.onclick = function() {
+            overlay.classList.toggle('active');
+            const icon = burger.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         };
 
         // Закрывать при клике на ссылку
-        box.onclick = function() {
-            box.classList.remove('show');
+        overlay.onclick = function() {
+            overlay.classList.remove('active');
         };
     </script>
 </body>
