@@ -9,18 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* Базовые стили навигации */
+        /* Базовый сброс для навигации */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
-            background: rgba(13, 17, 23, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 40px;
+            background: #0d1117;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
             position: sticky;
             top: 0;
-            z-index: 9999;
+            z-index: 10000;
+            height: 70px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: left;
         }
 
         .logo a {
@@ -30,6 +36,7 @@
             font-size: 1.8em;
             letter-spacing: 4px;
             font-family: 'Arial Black', sans-serif;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
         .nav-content {
@@ -39,51 +46,49 @@
         }
 
         .menu-toggle {
-            display: none;
-            font-size: 24px;
+            display: none; /* Скрыто на ПК */
+            font-size: 26px;
             color: #00d4ff;
             cursor: pointer;
+            z-index: 10001;
             width: 40px;
         }
 
-        /* МОБИЛЬНАЯ ВЕРСИЯ */
+        /* --- МОБИЛЬНАЯ ВЕРСИЯ (Экран телефона) --- */
         @media (max-width: 992px) {
-            nav {
-                padding: 15px 20px;
-            }
-
             .menu-toggle {
-                display: block; /* Показываем иконку меню */
+                display: block !important; /* Показываем полоски */
             }
 
-            /* Центрируем логотип ADO на мобилках */
             .logo {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
+                text-align: center; /* Центрируем ADO */
             }
 
             .nav-content {
-                display: none; /* Скрываем вкладки */
-                flex-direction: column;
+                display: none; /* Прячем вкладки по умолчанию */
                 position: fixed;
                 top: 70px;
                 left: 0;
                 width: 100%;
+                height: auto;
                 background: #0d1117;
-                padding: 20px 0;
-                border-bottom: 2px solid #00d4ff;
+                flex-direction: column;
                 gap: 0;
+                padding: 10px 0;
+                border-bottom: 2px solid #00d4ff;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.9);
             }
 
+            /* Класс, который добавляет JavaScript при клике */
             .nav-content.active {
-                display: flex !important; /* Показываем при нажатии */
+                display: flex !important;
             }
 
             .nav-content a {
                 width: 100%;
                 text-align: center;
-                padding: 15px 0;
+                padding: 18px 0;
+                font-size: 1.2rem;
                 border-bottom: 1px solid rgba(255,255,255,0.05);
                 color: white !important;
                 text-decoration: none;
@@ -94,14 +99,19 @@
                 padding: 20px;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                gap: 10px;
+                gap: 15px;
             }
-            
-            main { padding: 0 15px !important; }
+
+            /* Пустой блок для выравнивания логотипа по центру */
+            .placeholder {
+                display: block !important;
+                width: 40px;
+            }
         }
 
-        /* Стили для десктопного меню пользователя */
+        /* Для компьютера прячем плейсхолдер */
+        .placeholder { display: none; }
+        
         #logoutMenu {
             display: none;
             position: absolute;
@@ -126,7 +136,7 @@
             <a href="{{ url_for('home') }}">ADO</a>
         </div>
 
-        <div class="nav-content" id="nav-content">
+        <div class="nav-content" id="nav-links">
             <a href="{{ url_for('home') }}">ГЛАВНАЯ</a>
             <a href="{{ url_for('index') }}"><i class="fas fa-newspaper"></i> Новости</a>
             <a href="/discography"><i class="fas fa-compact-disc"></i> Дискография</a>
@@ -139,59 +149,67 @@
             <div class="auth-buttons">
                 {% if current_user.is_authenticated %}
                     <div style="position: relative;">
-                        <div id="userTrigger" style="cursor: pointer; color: white; font-weight: bold; display: flex; align-items: center; gap: 8px; background: rgba(0, 212, 255, 0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid #00d4ff;">
+                        <div id="userTrigger" style="cursor: pointer; color: white; font-weight: bold; display: flex; align-items: center; gap: 8px; background: rgba(0, 212, 255, 0.1); padding: 8px 18px; border-radius: 20px; border: 1px solid #00d4ff;">
                             {{ current_user.username }} <i class="fas fa-caret-down"></i>
                         </div>
-                        <div id="logoutMenu">
-                            <a href="/logout" style="color: #ff4b4b; text-decoration: none;">Выйти</a>
+                        <div id="logoutMenu" id="profile-menu">
+                            <a href="/logout" style="color: #ff4b4b; text-decoration: none; display: block; padding: 5px;">Выйти</a>
                         </div>
                     </div>
                 {% else %}
                     <a href="/login" style="color: #00d4ff; text-decoration: none;">Вход</a>
-                    <a href="/register" style="background: #00d4ff; color: black; padding: 8px 15px; border-radius: 20px; text-decoration: none; font-weight: bold;">Регистрация</a>
+                    <a href="/register" style="background: #00d4ff; color: black !important; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold;">Регистрация</a>
                 {% endif %}
             </div>
         </div>
 
-        <div style="width: 40px;" class="menu-toggle"></div>
+        <div class="placeholder"></div>
     </nav>
 
-    <main style="padding: 0 40px; margin-top: 20px;">
+    <main style="padding: 20px 15px;">
         {% block content %}{% endblock %}
     </main>
 
     <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navContent = document.getElementById('nav-content');
-        const userTrigger = document.getElementById('userTrigger');
-        const logoutMenu = document.getElementById('logoutMenu');
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            const userTrigger = document.getElementById('userTrigger');
+            const logoutMenu = document.getElementById('logoutMenu');
 
-        // Открытие/закрытие вкладок на мобилке
-        mobileMenu.onclick = function(e) {
-            e.stopPropagation();
-            navContent.classList.toggle('active');
-            const icon = mobileMenu.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        };
+            // Клик по трем полоскам
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Чтобы клик не улетал дальше
+                navLinks.classList.toggle('active');
+                
+                // Меняем иконку
+                const icon = menuBtn.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
 
-        // Открытие меню профиля
-        if (userTrigger) {
-            userTrigger.onclick = function(e) {
-                e.stopPropagation();
-                logoutMenu.style.display = logoutMenu.style.display === 'block' ? 'none' : 'block';
-            };
-        }
+            // Клик по профилю
+            if (userTrigger) {
+                userTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    logoutMenu.style.display = (logoutMenu.style.display === 'block') ? 'none' : 'block';
+                });
+            }
 
-        // Закрытие всего при клике в любое место
-        document.onclick = function() {
-            navContent.classList.remove('active');
-            if (logoutMenu) logoutMenu.style.display = 'none';
-            const icon = mobileMenu.querySelector('i');
-            icon.classList.add('fa-bars');
-            icon.classList.remove('fa-times');
-        };
+            // Закрыть всё, если кликнули мимо
+            document.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                if (logoutMenu) logoutMenu.style.display = 'none';
+                const icon = menuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
     </script>
 </body>
 </html>
+
 
