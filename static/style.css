@@ -288,3 +288,56 @@ input:focus, textarea:focus {
     border-radius: 5px;
     box-shadow: 0 0 10px var(--neon-blue);
 }
+/* --- МОБИЛЬНОЕ МЕНЮ (ТОЛЬКО ДЛЯ ЭКРАНОВ МЕНЬШЕ 768px) --- */
+
+/* Скрываем кнопку меню на ПК */
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Показываем кнопку "три полоски" на телефоне */
+    .menu-toggle {
+        display: block;
+        font-size: 24px;
+        color: var(--neon-blue);
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    /* Прячем ссылки в выпадающий список */
+    .nav-links {
+        display: none; /* Изначально скрыто */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Появится сразу под навигацией */
+        left: 0;
+        width: 100%;
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--neon-blue);
+        border-top: none;
+        border-radius: 0 0 15px 15px;
+        padding: 20px;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    /* Когда нажали на полоски (добавился класс .active через JS) */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 15px;
+        border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        justify-content: center; /* Текст по центру для удобства пальца */
+    }
+
+    /* Фикс, чтобы логотип и полоски были по краям */
+    nav {
+        justify-content: space-between !important;
+        position: relative;
+    }
+}
