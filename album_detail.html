@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <nav style="margin-bottom: 20px;">
+        <a href="/discography" style="color: #00d4ff; text-decoration: none; font-weight: bold;">← Вернуться к списку альбомов</a>
+    </nav>
+
+    <div class="card album-hero">
+        <img src="{{ album[1] }}" class="album-img-large">
+        <div class="album-info-header">
+            <h1 style="color: #00d4ff; margin: 0;">{{ album[0] }}</h1>
+            <p class="description" style="color: #c9d1d9; margin-top: 10px;">{{ album[2] }}</p>
+        </div>
+    </div>
+
+    <h2 class="section-title" style="color: #00d4ff; margin-top: 40px;">Треки и Видео</h2>
+    
+    <div class="track-list">
+        {% for track in tracks %}
+        <div class="track-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="track-name">{{ track[0] }}</h3>
+                
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                <form action="{{ url_for('delete_track', track_id=track[3]) }}" method="POST" 
+                      onsubmit="return confirm('Вы уверены, что хотите удалить этот трек?');" 
+                      style="margin: 0;">
+                    <button type="submit" class="admin-delete-btn" title="Удалить трек">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+            
+            <div class="media-row">
+                <div class="spotify-box">
+                    {% if track[1] %}
+                        <iframe src="https://open.spotify.com/embed/track/{{ track[1] }}" 
+                                width="100%" height="80" frameborder="0" 
+                                allowtransparency="true" allow="encrypted-media"
+                                style="border-radius: 8px;"></iframe>
+                        
+                        <form action="/add_to_favorite" method="POST" style="margin-top: 10px; text-align: right;">
+                            <input type="hidden" name="content_id" value="{{ loop.index }}">
+                            <input type="hidden" name="content_type" value="track">
+                            <input type="hidden" name="title" value="{{ track[0] }} (Audio)">
+                            <input type="hidden" name="extra_data" value="{{ track[1] }}">
+                            <button type="submit" title="Добавить трек в любимое" style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">❤️</button>
+                        </form>
+                    {% else %}
+                        <p class="no-data">Музыка не добавлена</p>
+                    {% endif %}
+                </div>
+
+                <div class="youtube-box">
+                    {% if track[2] %}
+                        <iframe width="100%" height="200" 
+                                src="https://www.youtube.com/embed/{{ track[2] }}" 
+                                frameborder="0" allow="autoplay; encrypted-media" 
+                                allowfullscreen style="border-radius: 8px; border: 1px solid #333;"></iframe>
+                        
+                        <form action="/add_to_favorite" method="POST" style="margin-top: 10px; text-align: right;">
+                            <input type="hidden" name="content_id" value="{{ loop.index + 1000 }}">
+                            <input type="hidden" name="content_type" value="video">
+                            <input type="hidden" name="title" value="{{ track[0] }} (Video)">
+                            <input type="hidden" name="extra_data" value="{{ track[2] }}">
+                            <button type="submit" title="Добавить клип в любимое" style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">🎬 ❤️</button>
+                        </form>
+                    {% else %}
+                        <p class="no-data">Клип не добавлен</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p style="color: #8b949e; text-align: center;">В этом альбоме пока нет добавленных песен.</p>
+        {% endfor %}
+    </div>
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="card add-form" style="border: 2px dashed #00d4ff; margin-top: 50px; padding: 25px; background: rgba(0, 212, 255, 0.05);">
+        <h3 style="color: #00d4ff; margin-top: 0;">➕ Добавить новый контент (Админ)</h3>
+        <form action="/add_track/{{ album_id }}" method="POST">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" name="title" placeholder="Название песни (например: Show)" required 
+                       style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+                <input type="text" name="spotify_url" placeholder="Ссылка на Spotify трек"
+                       style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+                <input type="text" name="youtube_url" placeholder="Ссылка на YouTube клип"
+                       style="padding: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white;">
+                <button type="submit" style="background: #00d4ff; color: #0d1117; font-weight: bold; border: none; padding: 12px; border-radius: 5px; cursor: pointer;">
+                    Опубликовать на сайте
+                </button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+</div>
+
+<style>
+
+    .album-hero { display: flex; gap: 30px; align-items: center; background: linear-gradient(145deg, #161b22, #0d1117); padding: 25px; border-radius: 15px; border: 1px solid #30363d; }
+    .album-img-large { width: 200px; height: 200px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .track-card { background: #161b22; margin-bottom: 20px; padding: 20px; border-radius: 15px; border: 1px solid #30363d; transition: 0.3s; position: relative; }
+    .track-card:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.1); }
+    .media-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; margin-top: 15px; }
+    .no-data { color: #555; font-style: italic; font-size: 0.9rem; }
+    .track-name { color: #00d4ff; margin: 0; font-size: 1.4rem; }
+
+  
+    .admin-delete-btn {
+        background: rgba(255, 75, 75, 0.2);
+        border: 1px solid #ff4b4b;
+        color: #ff4b4b;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        backdrop-filter: blur(5px);
+    }
+
+    .admin-delete-btn:hover {
+        background: #ff4b4b;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
+    }
+
+    @media (max-width: 768px) { 
+        .media-row { grid-template-columns: 1fr; } 
+        .album-hero { flex-direction: column; text-align: center; }
+    }
+</style>
+{% endblock %}

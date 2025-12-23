@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 style="color: #00d4ff; text-align: center; margin-bottom: 30px;">Лента новостей Ado</h1>
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="card" style="border: 2px dashed #00d4ff; background: rgba(0, 212, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+        <h3 style="color: #00d4ff; margin-top: 0;">Добавить новость (Панель администратора)</h3>
+        <form action="/add_news" method="POST">
+            <input type="text" name="title" placeholder="Заголовок новости" required 
+                   style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #0d1117; color: white; border: 1px solid #30363d;">
+            <textarea name="content" placeholder="Текст новости" required 
+                      style="width: 100%; min-height: 100px; padding: 10px; border-radius: 5px; background: #0d1117; color: white; border: 1px solid #30363d;"></textarea>
+            <button type="submit" style="background: #00d4ff; color: #0d1117; font-weight: bold; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                Опубликовать
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <hr style="border: 0; height: 1px; background: #30363d; margin: 40px 0;">
+
+    {% for item in news %}
+    <div class="card" style="background: #161b22; padding: 25px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #30363d;">
+        <h2 style="color: #00d4ff; margin-top: 0;">{{ item[0] }}</h2>
+        <p style="line-height: 1.6; color: #c9d1d9;">{{ item[1] }}</p>
+        
+        {% if current_user.is_authenticated and current_user.is_admin %}
+            <div style="margin-top: 15px; border-top: 1px solid #30363d; padding-top: 15px;">
+                <a href="/delete_news/{{ loop.index0 }}" 
+                   onclick="return confirm('Вы уверены, что хотите удалить эту новость?')" 
+                   style="color: #ff4b4b; text-decoration: none; font-size: 0.85em; border: 1px solid #ff4b4b; padding: 6px 12px; border-radius: 5px; display: inline-block; transition: 0.3s;">
+                    🗑 Удалить новость
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    {% else %}
+        <p style="text-align: center; color: #8b949e;">Новостей пока нет. Зайдите как администратор, чтобы добавить первую!</p>
+    {% endfor %}
+
+    <hr style="border: 0; height: 1px; background: #30363d; margin: 60px 0 40px 0;">
+    </div>
+{% endblock %}

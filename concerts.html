@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <h1 style="color: #00d4ff; text-align: center; margin-bottom: 40px; text-transform: uppercase;">Мировое турне Ado</h1>
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="card" style="border: 2px dashed #00d4ff; background: rgba(0, 212, 255, 0.05); padding: 20px; margin-bottom: 40px;">
+        <h3 style="color: #00d4ff;">➕ Добавить концерт (Админ)</h3>
+        <form action="/add_concert" method="POST" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+            <input type="text" name="city" placeholder="Город" required>
+            <input type="text" name="venue" placeholder="Место (Зал)" required>
+            <input type="date" name="date" required>
+            <input type="text" name="url" placeholder="Ссылка на билеты">
+            <button type="submit" style="grid-column: span 4; background: #00d4ff; color: #0d1117; font-weight: bold; border: none; padding: 10px; cursor: pointer;">Добавить в расписание</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="concert-list">
+        {% for concert in concerts %}
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; background: #161b22; margin-bottom: 15px; border: 1px solid #30363d; padding: 20px; border-left: 5px solid #00d4ff;">
+            <div style="flex: 1;">
+                <span style="color: #8b949e; font-size: 0.9em;">{{ concert[3].strftime('%d.%m.%Y') }}</span>
+                <h2 style="margin: 5px 0; color: white;">{{ concert[1] }}</h2>
+                <p style="color: #00d4ff; margin: 0;">{{ concert[2] }}</p>
+            </div>
+            
+            <div>
+                {% if concert[5] %}
+                    <span style="color: #ff4b4b; font-weight: bold; border: 1px solid #ff4b4b; padding: 8px 15px; border-radius: 5px;">SOLD OUT</span>
+                {% elif concert[4] %}
+                    <a href="{{ concert[4] }}" target="_blank" style="background: #00d4ff; color: #0d1117; text-decoration: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; transition: 0.3s;">
+                        Купить билеты
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <p style="text-align: center; color: #8b949e; padding: 50px;">Предстоящих концертов пока не запланировано. Следите за обновлениями!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

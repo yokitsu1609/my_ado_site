@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+    <div style="text-align: center; margin-bottom: 50px;">
+        <h1 style="
+            font-size: 3.5em; 
+            margin: 0; 
+            color: #fff; 
+            text-transform: uppercase; 
+            letter-spacing: 5px;
+            display: inline-block;
+            position: relative;
+        ">
+            О проекте
+            <div style="
+                position: absolute; 
+                bottom: -10px; 
+                left: 50%; 
+                transform: translateX(-50%); 
+                width: 60px; 
+                height: 4px; 
+                background: var(--neon-blue); 
+                border-radius: 2px; 
+                box-shadow: 0 0 15px var(--neon-blue);
+            "></div>
+        </h1>
+        <p style="
+            color: var(--neon-blue); 
+            letter-spacing: 3px; 
+            margin-top: 25px; 
+            text-transform: uppercase; 
+            font-weight: bold;
+            opacity: 0.9;
+        ">
+            Digital Sanctuary for Ado Fans
+        </p>
+    </div>
+
+    <div class="discography-grid">
+        <div class="card" style="padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-bullseye" style="font-size: 3em; color: var(--neon-blue); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 1.5em; margin-bottom: 15px;">Наша Цель</h2>
+            <p style="color: #8b949e;">Создать самое уютное и технологичное пространство для русскоязычных фанатов Ado, где информация всегда под рукой, а дизайн отражает эстетику артиста.</p>
+        </div>
+
+        <div class="card" style="padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-layer-group" style="font-size: 3em; color: var(--neon-blue); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 1.5em; margin-bottom: 15px;">Функционал</h2>
+            <p style="color: #8b949e;">Мы реализовали полноценную базу данных дискографии, систему отзывов в реальном времени, личный кабинет с разделом "Любимое" и админ-панель для новостей.</p>
+        </div>
+
+        <div class="card" style="padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-code" style="font-size: 3em; color: var(--neon-blue); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 1.5em; margin-bottom: 15px;">Стек</h2>
+            <p style="color: #8b949e;">Сайт построен на мощной связке <strong>Python + Flask</strong>. Для хранения данных используется профессиональная БД <strong>PostgreSQL</strong>, а за неоновый стиль отвечает современный CSS3.</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 40px; padding: 40px; border-left: 5px solid var(--neon-blue) !important; background: rgba(0, 212, 255, 0.02);">
+        <h2 style="margin-bottom: 25px;"><i class="fas fa-terminal"></i> Почему это важно?</h2>
+        <p style="font-size: 1.2em; margin-bottom: 20px; color: #c9d1d9;">
+            Этот проект — не просто веб-страница, это демонстрация того, как технологии могут объединять людей. Мы верим, что музыка Ado заслуживает качественной цифровой презентации. 
+        </p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+            <div style="background: rgba(0, 212, 255, 0.05); padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(0, 212, 255, 0.3); color: var(--neon-blue); font-size: 0.9em;">
+                <i class="fas fa-check-circle"></i> Без спама
+            </div>
+            <div style="background: rgba(0, 212, 255, 0.05); padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(0, 212, 255, 0.3); color: var(--neon-blue); font-size: 0.9em;">
+                <i class="fas fa-bolt"></i> Быстрая загрузка
+            </div>
+            <div style="background: rgba(0, 212, 255, 0.05); padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(0, 212, 255, 0.3); color: var(--neon-blue); font-size: 0.9em;">
+                <i class="fas fa-shield-alt"></i> Защита данных
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 60px; padding: 30px; border-top: 1px solid #30363d; color: #8b949e;">
+        <p>© 2025 Ado Fan Project. Создано фанатами для фанатов.</p>
+        <div style="margin-top: 15px; font-size: 1.5em; display: flex; justify-content: center; gap: 25px;">
+            <a href="#" class="footer-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer-link"><i class="fab fa-discord"></i></a>
+            <a href="#" class="footer-link"><i class="fab fa-telegram"></i></a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .footer-link {
+        color: #8b949e;
+        transition: 0.3s;
+    }
+    .footer-link:hover {
+        color: var(--neon-blue);
+        transform: scale(1.2);
+    }
+    h1::before, h1::after {
+        display: none !important;
+    }
+</style>
+{% endblock %}
