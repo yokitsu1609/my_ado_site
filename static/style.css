@@ -1,68 +1,84 @@
-/* --- АДАПТИВНОСТЬ (ДЛЯ МОБИЛЬНЫХ И ПЛАНШЕТОВ) --- */
-
-/* Планшеты и телефоны (меньше 992px) */
-@media (max-width: 992px) {
-    .container {
-        padding: 15px;
-    }
-    
-    .discography-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-    }
+/* --- ПОЛНОСТЬЮ ОБНОВЛЕННАЯ АДАПТИВНАЯ НАВИГАЦИЯ --- */
+nav {
+    display: flex;
+    flex-direction: column; /* На мобилках всё в столбик */
+    align-items: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    padding: 15px;
+    border-radius: 0 0 20px 20px; /* Скругляем только низ */
+    margin-bottom: 20px;
+    border: 2px solid var(--neon-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Обычные смартфоны (меньше 768px) */
-@media (max-width: 768px) {
+.nav-links {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* Вкладки в две колонки, чтобы были крупными */
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+nav a {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--neon-blue);
+    padding: 15px 5px; /* Высокие кнопки, удобно нажимать */
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--neon-blue) !important;
+}
+
+/* На компьютерах возвращаем всё в одну линию */
+@media (min-width: 769px) {
     nav {
-        flex-direction: column; /* Складываем логотип и ссылки друг под друга */
-        padding: 15px;
-        min-height: auto;
-        position: relative; /* На мобилках лучше убрать sticky, чтобы не занимал пол-экрана */
-        top: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px 30px;
+        border-radius: 15px;
+        margin: 20px auto;
+        max-width: 1200px;
     }
-
     .nav-links {
-        justify-content: center;
-        gap: 15px;
-        margin-top: 15px;
-        width: 100%;
+        display: flex;
+        width: auto;
+        grid-template-columns: none;
     }
-
     nav a {
-        font-size: 14px; /* Чуть меньше текст, чтобы влез в ряд */
-        padding: 5px;
-    }
-
-    h1 {
-        font-size: 28px; /* Уменьшаем огромные заголовки */
-    }
-
-    .card, .album-card {
-        padding: 15px; /* Меньше внутренние отступы, больше места для контента */
+        background: transparent;
+        border: none;
+        padding: 10px 15px;
     }
 }
 
-/* Маленькие телефоны (меньше 480px) */
-@media (max-width: 480px) {
-    .nav-links {
-        display: grid; /* Ссылки в два столбика, чтобы не вылезали за экран */
-        grid-template-columns: 1fr 1fr;
-        text-align: center;
-        gap: 10px;
-    }
+/* --- ИСПРАВЛЕНИЕ "ВСЁ МАЛЕНЬКОЕ" --- */
+.container {
+    width: 100%;
+    padding: 10px; /* Минимальные отступы по бокам */
+}
 
-    nav a {
-        justify-content: center;
-    }
+.card {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 20px !important; /* Больше пространства внутри */
+}
 
-    .discography-grid {
-        grid-template-columns: 1fr; /* Альбомы по одному на весь экран */
-    }
-    
-    button, .btn-submit {
-        width: 100%; /* Кнопки на всю ширину, чтобы удобнее было попадать пальцем */
-    }
+input, textarea, button {
+    font-size: 16px !important; /* Чтобы iPhone не приближал экран при вводе */
+    padding: 15px;
+}
+
+/* Увеличиваем текст для чтения на мобилках */
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 /* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
 * {
